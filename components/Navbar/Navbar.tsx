@@ -61,7 +61,7 @@ function UserMenu() {
   const isLogged = !!user;
 
   return (
-    <div className="relative" ref={menuRef}>
+    <div className="relative flex flex-col items-center" ref={menuRef}>
       <button
         className="rounded-full bg-gray-200 hover:bg-gray-300 p-2 transition-colors"
         onClick={() => setOpen((v) => !v)}
@@ -71,6 +71,9 @@ function UserMenu() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 1115 0v.75a.75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75v-.75z" />
         </svg>
       </button>
+      {isLogged && user?.email && (
+        <span className="text-xs text-gray-700 mt-1">{user.email}</span>
+      )}
       {open && (
         <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
           {isLogged ? (
