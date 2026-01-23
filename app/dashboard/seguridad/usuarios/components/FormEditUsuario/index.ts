@@ -1,0 +1,1 @@
+export { FormEdithUsuario } from './FormEdithUsuario';
