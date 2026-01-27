@@ -3,7 +3,7 @@ import React from "react";
 
 export default function LayoutAuth({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex flex-col min-h-screen items-center justify-center">
+        <div className="flex flex-col min-h-screen items-center justify-center">           
             <div className="flex flex-col items-center mt-16">
                 <Logo/>
                 <h1 className="text-3xl mt-4 mb-2">Bienvenido a Sharf</h1>

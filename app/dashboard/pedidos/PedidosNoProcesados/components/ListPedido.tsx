@@ -54,7 +54,7 @@ export function ListPedido() {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        '/ChutePedido/GetStatusChutePedido',
+        '/ChutePedido/GetAllPedidoNoProcesados',
         {
           params: {
             FechaInicio: fechaInicio.replace('T', ' '),
@@ -85,7 +85,7 @@ export function ListPedido() {
   if (user && user.rolId !== 1 && user.rolId !== 2) {
     if (typeof window !== 'undefined') router.replace('/dashboard');
     return (
-      <div className="flex items-center justify-center h-96 text-lg text-red-500">
+      <div className="flex items-center justify-center h-96 text-lg text-black-500">
         Acceso denegado. Solo administradores u operadores pueden acceder a este módulo.
       </div>
     );

@@ -153,7 +153,7 @@ export function ListUsuario({ reloadRef }: { reloadRef?: React.MutableRefObject<
 
     if (isNotAdmin) {
         return (
-            <div className="flex items-center justify-center h-96 text-lg text-red-500">
+            <div className="flex items-center justify-center h-96 text-lg text-black">
                 Acceso denegado. Solo administradores pueden acceder a este módulo.
             </div>
         );

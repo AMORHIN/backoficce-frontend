@@ -34,17 +34,17 @@ export const dataGeneralSidebar = [
         href : "/dashboard/pedidos",
         children: [
             {
-                label: "PedidosNoProcesados",
+                label: "Pedidos No Procesados",
                 href: "/dashboard/pedidos/PedidosNoProcesados",
                 icon: FileX
             },
             {
-                label: "PedidosProcesados",
-                href: "/dashboard/pedidos/PedidosProcesados",
+                label: "Pedidos Procesados",
+                href: "/dashboard/pedidos/PedidosVinculados",
                 icon: FileCheck
             },
             {
-                label: "PedidosSorteados",
+                label: "Pedidos Sorteados",
                 href: "/dashboard/pedidos/PedidosSorteados",
                 icon: ListChecks
             }

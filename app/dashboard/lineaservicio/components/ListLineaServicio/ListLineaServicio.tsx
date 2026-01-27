@@ -15,7 +15,7 @@ import { useAuth } from '@/components/AuthContext';
 import { useRouter } from 'next/navigation';
 
 export function ListLineaServicio() {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const router = useRouter();
     const [lineaServicio, setLineaServicio] = useState<LineaServicio[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +36,8 @@ export function ListLineaServicio() {
             setIsLoading(true);
             const response = await axios.get(`${BASE_URL_API}/LineaServicio/GetAllLineaServicio`, {
                 headers: {
-                    ApiKey: API_KEY,
+                    'accept': 'text/plain',
+                    'Authorization': `Bearer ${token}`
                 },
             });
             if (response.data.success) {
@@ -75,13 +76,13 @@ export function ListLineaServicio() {
                 {
                     lineaServicioId: selectedLineaServicio.lineaServicioId,
                     estadoServicio: selectedEstado,
-                    updateUserId: 1 // Temporal
+                    updateUserId: user?.id // ID real del usuario autenticado
                 },
                 {
                     headers: {
-                        ApiKey: API_KEY,
                         'Content-Type': 'application/json',
                         'accept': 'text/plain',
+                        'Authorization': `Bearer ${token}`
                     },
                 }
             );
@@ -111,7 +112,7 @@ export function ListLineaServicio() {
         fetchData(); // Recargar datos después de editar
     };
 
-    const columns = getColumns(handleEdit, handleActivate);
+    const columns = getColumns(handleEdit, handleActivate, lineaServicio);
 
     if (isNotAllowed) {
         return (

@@ -20,7 +20,8 @@ export type LineaServicio = {
 
 export const getColumns = (
   onEdit: (lineaServicio: LineaServicio) => void,
-  onActivate: (lineaServicio: LineaServicio) => void
+  onActivate: (lineaServicio: LineaServicio) => void,
+  listaCompleta: LineaServicio[]
 ): ColumnDef<LineaServicio>[] => [
   {
     id: "numero",
@@ -86,9 +87,15 @@ export const getColumns = (
                         <Pencil className="w-4 h-4 mr-2"/>
                         Editar
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => onActivate(lineaServicio)}>
-                        <CheckCircle className="w-4 h-4 mr-2"/>
-                        Activar
+                    <DropdownMenuItem 
+                      onClick={() => onActivate(lineaServicio)}
+                      disabled={
+                        lineaServicio.estadoServicio !== "ACTIVO" &&
+                        listaCompleta.filter((ls: LineaServicio) => ls.estadoServicio === "ACTIVO").length > 0
+                      }
+                    >
+                      <CheckCircle className="w-4 h-4 mr-2"/>
+                      Activar
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
