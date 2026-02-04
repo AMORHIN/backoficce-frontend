@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useCallback } from 'react';
+import * as XLSX from 'xlsx';
 import { DataTable } from './ListPedido/data-table';
 import { getColumns } from './ListPedido/columns';
 import { Pedido } from './ListPedido/ListPedido.types';
@@ -17,6 +18,16 @@ import { useRouter } from 'next/navigation';
 
 
 export function ListPedido() {
+	// Exportar pedidos a Excel
+	const exportToExcel = () => {
+		if (!pedidos.length) return;
+		// Eliminar campos no deseados si es necesario
+		const dataToExport = pedidos.map(({ body, ...rest }) => rest);
+		const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, 'Pedidos');
+		XLSX.writeFile(workbook, 'pedidos_no_procesados.xlsx');
+	};
 
   const { user } = useAuth();
   const router = useRouter();
@@ -94,39 +105,47 @@ export function ListPedido() {
 	return (
 		<div>
 			<h2 className="text-lg font-semibold mb-2">Pedidos no procesados</h2>
-            <div className="p-4 bg-background shadow-md rounded-lg mb-4">
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 items-end">
-                    {/* Fecha Inicio */}
-                    <div className="flex flex-col gap-2">
-                    <label className="text-xs font-medium">Fecha y Hora Inicio</label>
-                        <Input
-                            type="datetime-local"
-                            value={fechaInicio}
-                            onChange={e => setFechaInicio(e.target.value)}
-                        />
-                    </div>
-                    {/* Fecha Fin */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-xs font-medium">Fecha y Hora Fin</label>
-                        <Input
-                            type="datetime-local"
-                            value={fechaFin}
-                            onChange={e => setFechaFin(e.target.value)}
-                        />
-                    </div>
-					{/* Botón */}
-					<div className="flex md:items-end">
-						<Button
-							disabled={isLoading}
-							className="h-10 px-6 flex items-center gap-2"
-							onClick={fetchPedidos}
-						>
-							{isLoading && <Loader2 className="animate-spin" size={18} />}
-							{isLoading ? 'Buscando' : 'Buscar'}
-						</Button>
+			<div className="p-4 bg-background shadow-md rounded-lg mb-4">
+				<div className="grid grid-cols-1 gap-4 lg:grid-cols-3 items-end">
+					{/* Fecha Inicio */}
+					<div className="flex flex-col gap-2">
+					<label className="text-xs font-medium">Fecha y Hora Inicio</label>
+						<Input
+							type="datetime-local"
+							value={fechaInicio}
+							onChange={e => setFechaInicio(e.target.value)}
+						/>
 					</div>
-                </div>
-            </div>
+					{/* Fecha Fin */}
+					<div className="flex flex-col gap-2">
+						<label className="text-xs font-medium">Fecha y Hora Fin</label>
+						<Input
+							type="datetime-local"
+							value={fechaFin}
+							onChange={e => setFechaFin(e.target.value)}
+						/>
+					</div>
+				{/* Botones */}
+				<div className="flex md:items-end gap-2">
+					<Button
+						disabled={isLoading}
+						className="h-10 px-6 flex items-center gap-2"
+						onClick={fetchPedidos}
+					>
+						{isLoading && <Loader2 className="animate-spin" size={18} />}
+						{isLoading ? 'Buscando' : 'Buscar'}
+					</Button>
+					<Button
+						variant="outline"
+						className="h-10 px-6 flex items-center gap-2"
+						onClick={exportToExcel}
+						disabled={pedidos.length === 0}
+					>
+						Exportar a Excel
+					</Button>
+				</div>
+				</div>
+			</div>
 
 			<DataTable
 				columns={getColumns(

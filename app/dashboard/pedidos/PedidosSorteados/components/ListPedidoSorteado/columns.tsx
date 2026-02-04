@@ -51,9 +51,17 @@ export const getColumns = (
 		accessorKey: "qty",
 		header: "Cantidad",
 	},
-    {
+	{
 		accessorKey: "weight",
 		header: "Peso",
+		cell: ({ getValue }) => {
+			const value = getValue();
+			if (typeof value !== 'number' && typeof value !== 'string') return '';
+			const num = Number(value);
+			if (isNaN(num)) return value;
+			// Formato: x,xx.xx (miles y decimales)
+			return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+		},
 	},
     {
 		accessorKey: "fechaSorteado",

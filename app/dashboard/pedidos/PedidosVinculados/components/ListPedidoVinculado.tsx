@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from 'react';
+import * as XLSX from 'xlsx';
 import { DataTable } from './ListPedidoVinculado/data-table';
 import { getColumns } from './ListPedidoVinculado/columns';
 import { pedidoVinculado } from './ListPedidoVinculado/ListPedidoVinculado.types';
@@ -74,6 +75,15 @@ export function ListPedidoVinculado() {
     );
   }
 
+  // Exportar pedidos vinculados a Excel
+  const exportToExcel = () => {
+    if (!pedidosVinculados.length) return;
+    const worksheet = XLSX.utils.json_to_sheet(pedidosVinculados);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'PedidosVinculados');
+    XLSX.writeFile(workbook, 'pedidos_vinculados.xlsx');
+  };
+
   return (
     <div>
       <h2 className="text-lg font-semibold mb-2">Pedidos vinculados</h2>
@@ -97,8 +107,8 @@ export function ListPedidoVinculado() {
               onChange={e => setFechaFin(e.target.value)}
             />
           </div>
-          {/* Botón */}
-          <div className="flex md:items-end">
+          {/* Botones */}
+          <div className="flex md:items-end gap-2">
             <Button
               disabled={isLoading}
               className="h-10 px-6 flex items-center gap-2"
@@ -106,6 +116,14 @@ export function ListPedidoVinculado() {
             >
               {isLoading && <Loader2 className="animate-spin" size={18} />}
               {isLoading ? 'Buscando' : 'Buscar'}
+            </Button>
+            <Button
+              variant="outline"
+              className="h-10 px-6 flex items-center gap-2"
+              onClick={exportToExcel}
+              disabled={pedidosVinculados.length === 0}
+            >
+              Exportar a Excel
             </Button>
           </div>
         </div>

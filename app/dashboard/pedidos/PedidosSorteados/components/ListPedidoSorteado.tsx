@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from 'react';
+import * as XLSX from 'xlsx';
 import { DataTable } from './ListPedidoSorteado/data-table';
 import { getColumns } from './ListPedidoSorteado/columns';
 import { pedidoSorteado } from './ListPedidoSorteado/ListPedidoSorteado.types';
@@ -87,56 +88,77 @@ export function ListPedidoSorteado() {
     );
   }
 
+  // Exportar pedidos sorteados a Excel
+  const exportToExcel = () => {
+    if (!pedidosSorteados.length) return;
+    // Formatear weight como string con dos decimales y separador de miles
+    const dataToExport = pedidosSorteados.map(p => ({
+      ...p,
+      weight: typeof p.weight === 'number' ? p.weight.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : p.weight
+    }));
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'PedidosSorteados');
+    XLSX.writeFile(workbook, 'pedidos_sorteados.xlsx');
+  };
+
   return (
     <div>
       <h2 className="text-lg font-semibold mb-2">Pedidos sorteados</h2>
-                  <div className="p-4 bg-background shadow-md rounded-lg mb-4">
-                      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 items-end">
-                          {/* Fecha Inicio */}
-                          <div className="flex flex-col gap-2">
-                          <label className="text-xs font-medium">Fecha y Hora Inicio</label>
-                              <Input
-                                  type="datetime-local"
-                                  value={fechaInicio}
-                                  onChange={e => setFechaInicio(e.target.value)}
-                              />
-                          </div>
-                          {/* Fecha Fin */}
-                          <div className="flex flex-col gap-2">
-                              <label className="text-xs font-medium">Fecha y Hora Fin</label>
-                              <Input
-                                  type="datetime-local"
-                                  value={fechaFin}
-                                  onChange={e => setFechaFin(e.target.value)}
-                              />
-                          </div>
-                {/* Botón */}
-                <div className="flex md:items-end">
-                  <Button
-                    disabled={isLoading}
-                    className="h-10 px-6 flex items-center gap-2"
-                    onClick={fetchPedidosSorteados}
-                  >
-                    {isLoading && <Loader2 className="animate-spin" size={18} />}
-                    {isLoading ? 'Buscando' : 'Buscar'}
-                  </Button>
-                </div>
-                 </div>
-                </div>
-      
-            <DataTable
-              columns={getColumns(
-                (json, providerOrder) => {
-                  const pedido = pedidosSorteados.find(p => p.providerOrderIdentifier === providerOrder);
-                  setJsonBody(json);
-                  setJsonProviderOrder(providerOrder);
-                  setPedidoBodyActual(pedido ?? null);
-                  setOpenModalBody(true);
-                },
-                (chutePedidoId) => { setPedidoSorteados(chutePedidoId); setOpenReprocesar(true); },
-              )}
-              data={pedidosSorteados}
+      <div className="p-4 bg-background shadow-md rounded-lg mb-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 items-end">
+          {/* Fecha Inicio */}
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-medium">Fecha y Hora Inicio</label>
+            <Input
+              type="datetime-local"
+              value={fechaInicio}
+              onChange={e => setFechaInicio(e.target.value)}
             />
+          </div>
+          {/* Fecha Fin */}
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-medium">Fecha y Hora Fin</label>
+            <Input
+              type="datetime-local"
+              value={fechaFin}
+              onChange={e => setFechaFin(e.target.value)}
+            />
+          </div>
+          {/* Botones */}
+          <div className="flex md:items-end gap-2">
+            <Button
+              disabled={isLoading}
+              className="h-10 px-6 flex items-center gap-2"
+              onClick={fetchPedidosSorteados}
+            >
+              {isLoading && <Loader2 className="animate-spin" size={18} />}
+              {isLoading ? 'Buscando' : 'Buscar'}
+            </Button>
+            <Button
+              variant="outline"
+              className="h-10 px-6 flex items-center gap-2"
+              onClick={exportToExcel}
+              disabled={pedidosSorteados.length === 0}
+            >
+              Exportar a Excel
+            </Button>
+          </div>
+        </div>
+      </div>
+      <DataTable
+        columns={getColumns(
+          (json, providerOrder) => {
+            const pedido = pedidosSorteados.find(p => p.providerOrderIdentifier === providerOrder);
+            setJsonBody(json);
+            setJsonProviderOrder(providerOrder);
+            setPedidoBodyActual(pedido ?? null);
+            setOpenModalBody(true);
+          },
+          (chutePedidoId) => { setPedidoSorteados(chutePedidoId); setOpenReprocesar(true); },
+        )}
+        data={pedidosSorteados}
+      />
     </div>
-  )
+  );
 }
