@@ -8,13 +8,12 @@ import './globals.css';
 const noto = Noto_Sans_Display({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Dashboard companies',
+  title: 'Sharf | Back Office',
   description: 'back office sharf',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    // <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className={noto.className + " h-screen"}>
           <AuthProvider>
@@ -25,6 +24,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </AuthProvider>
         </body>
       </html>
-    // </ClerkProvider>
   );
 }

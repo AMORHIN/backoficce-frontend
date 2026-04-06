@@ -36,7 +36,7 @@ export function SidebarItem(props: SidebarItemProps) {
                     type="button"
                     className={cn(
                         'w-full flex items-center gap-2 mt-1 text-slate-700 dark:text-slate-300 text-sm hover:bg-slate-200/60 dark:hover:bg-slate-700/50 p-2 rounded-lg cursor-pointer transition-colors',
-                        activePath && 'font-semibold',
+                        activePath && 'bg-slate-400/20',
                         open && 'bg-gray-100'
                     )}
                     style={activePath ? { background: '#e5e7eb', color: '#111827' } : {}}
@@ -50,8 +50,8 @@ export function SidebarItem(props: SidebarItemProps) {
                 <Link
                     href={href}
                     className={cn(
-                        'flex gap-x-4 mt-1 text-slate-700 dark:text-slate-300 text-sm items-center hover:bg-slate-200/60 dark:hover:bg-slate-700/50 p-2 rounded-lg cursor-pointer transition-colors',
-                        activePath && 'font-semibold'
+                        'flex gap-x-2 mt-2 light:text-slate-700 dark:text-white text-sm items-center hover:bg-slate-200/60 p-2 rounded-lg cursor-pointer',
+                        activePath && 'bg-slate-400/20'
                     )}
                     style={activePath ? { background: '#e5e7eb', color: '#111827' } : {}}
                 >
@@ -72,8 +72,8 @@ export function SidebarItem(props: SidebarItemProps) {
                                 key={child.label}
                                 href={child.href}
                                 className={cn(
-                                    'flex items-center gap-x-2 text-sm rounded-md px-3 py-1 transition-colors',
-                                    childActive ? 'bg-gray-200 text-[#111827] font-semibold shadow-sm' : 'text-slate-700 hover:bg-slate-200/60'
+                                    'flex gap-x-2 mt-2 light:text-slate-700 dark:text-white text-sm items-center hover:bg-slate-300/20 p-2 rounded-lg cursor-pointer',
+                                    childActive ? 'flex gap-x-2 mt-2 light:text-slate-700 dark:text-white text-sm items-center hover:bg-slate-300/20 p-2 rounded-lg cursor-pointer' : 'text-slate-700 hover:bg-slate-300/20'
                                 )}
                                 style={childActive ? { background: '#e5e7eb', color: '#111827', marginTop: 2 } : { marginTop: 2 }}
                             >

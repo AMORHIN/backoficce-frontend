@@ -10,7 +10,7 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col justify-center h-full items-center">
       <RegisterForm onRegister={handleRegister} />
     </div>
   );

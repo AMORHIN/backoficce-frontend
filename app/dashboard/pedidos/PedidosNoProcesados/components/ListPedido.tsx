@@ -90,7 +90,8 @@ export function ListPedido() {
 
   useEffect(() => {
     fetchPedidos();
-  }, [fetchPedidos]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Acceso total admin (rolId=1), operador (rolId=2) solo aquí
   if (user && user.rolId !== 1 && user.rolId !== 2) {
@@ -279,4 +280,3 @@ export function ListPedido() {
 		</div>
 	);
 }
-

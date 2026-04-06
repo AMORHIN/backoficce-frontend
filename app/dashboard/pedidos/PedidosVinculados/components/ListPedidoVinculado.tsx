@@ -64,7 +64,8 @@ export function ListPedidoVinculado() {
 
   useEffect(() => {
     fetchPedidosVinculados();
-  }, [fetchPedidosVinculados]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (user && user.rolId !== 1 && user.rolId !== 2) {
     if (typeof window !== 'undefined') router.replace('/dashboard');
@@ -92,37 +93,21 @@ export function ListPedidoVinculado() {
           {/* Fecha Inicio */}
           <div className="flex flex-col gap-2">
             <label className="text-xs font-medium">Fecha y Hora Inicio</label>
-            <Input
-              type="datetime-local"
-              value={fechaInicio}
-              onChange={e => setFechaInicio(e.target.value)}
-            />
+            <Input type="datetime-local" value={fechaInicio} onChange={e => setFechaInicio(e.target.value)} />
           </div>
           {/* Fecha Fin */}
           <div className="flex flex-col gap-2">
             <label className="text-xs font-medium">Fecha y Hora Fin</label>
-            <Input
-              type="datetime-local"
-              value={fechaFin}
-              onChange={e => setFechaFin(e.target.value)}
-            />
+            <Input type="datetime-local" value={fechaFin}  onChange={e => setFechaFin(e.target.value)}  />
           </div>
           {/* Botones */}
           <div className="flex md:items-end gap-2">
-            <Button
-              disabled={isLoading}
-              className="h-10 px-6 flex items-center gap-2"
-              onClick={fetchPedidosVinculados}
-            >
+            <Button disabled={isLoading} className="h-10 px-6 flex items-center gap-2" onClick={fetchPedidosVinculados} >
               {isLoading && <Loader2 className="animate-spin" size={18} />}
               {isLoading ? 'Buscando' : 'Buscar'}
             </Button>
-            <Button
-              variant="outline"
-              className="h-10 px-6 flex items-center gap-2"
-              onClick={exportToExcel}
-              disabled={pedidosVinculados.length === 0}
-            >
+
+            <Button variant="outline" className="h-10 px-6 flex items-center gap-2" onClick={exportToExcel} disabled={pedidosVinculados.length === 0}  >
               Exportar a Excel
             </Button>
           </div>

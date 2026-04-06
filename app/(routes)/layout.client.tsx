@@ -63,19 +63,27 @@ export default function ClientOnlyLayout({ children }: { children: React.ReactNo
 
   if (token && valid) {
     return (
-      <div className="flex h-screen w-full">
+      <div className="flex w-full h-full">
         {/* Sidebar fijo a la izquierda */}
-        <aside className="h-screen w-62.5 sticky top-0 left-0 z-30 shrink-0">
+        <div className="hidden xl:block w-80 h-full xl:fixed">
           <Sidebar />
-        </aside>
-        <div className="flex flex-col flex-1 h-screen w-full">
+        </div>
+        {/* <aside className="h-screen w-62.5 sticky top-0 left-0 z-30 shrink-0">
+        </aside> */}
+        <div className="w-full xl:ml-80">
+          <div className="p-6 bg-[#fafbfc] dark:bg-secondary">
+            {children}
+          </div>
+        </div>
+
+        {/* <div className="flex flex-col flex-1 h-screen w-full">
           <header className="sticky top-0 z-20 w-full">
             <Navbar />
           </header>
           <main className="flex-1 bg-muted/40 p-4 overflow-y-auto h-[calc(100vh-80px)]">
             {children}
           </main>
-        </div>
+        </div> */}
       </div>
     );
   }

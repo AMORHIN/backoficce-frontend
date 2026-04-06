@@ -14,7 +14,8 @@ import{
     FileCheck,
     ListChecks,
     User,
-    RollerCoasterIcon
+    RollerCoasterIcon,
+    Scale
 } from 'lucide-react'
 
 export const dataGeneralSidebar = [
@@ -54,6 +55,11 @@ export const dataGeneralSidebar = [
         icon:  FileSpreadsheet,
         label: "Importar Documentos",
         href : "/dashboard/documentos"
+    },
+    {
+        icon:  Scale,
+        label: "Pesos y Volumenes",
+        href : "/dashboard/cubicadora"
     }
 ]
 

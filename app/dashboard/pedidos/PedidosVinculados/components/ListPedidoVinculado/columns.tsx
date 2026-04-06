@@ -7,7 +7,7 @@ export const getColumns = (): ColumnDef<pedidoVinculado>[] => [
     cell: ({ row }) => row.index + 1,
 		size: 40,
 		enableColumnFilter: false
-},
+  },
   { accessorKey: "chutePedidoDetalleId", header: () => null, cell: () => null, size: 1 },
   { accessorKey: "providerOrderIdentifier", header: "Provider Order" },
   { accessorKey: "trakingNumber", header: "Traking Number" },

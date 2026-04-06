@@ -1,0 +1,49 @@
+name: Deploy Next.js to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Zip release
+        run: |
+          zip -r release.zip . \
+            -x ".git/*" \
+               ".github/*"
+
+      - name: Login Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_201130609AA840F1973FC7F57FA22A9E }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D036FAB474E2409FBC2C4CF59951535C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1E1C9CED4D87415A81CF23345388FB69 }}
+
+      - name: Deploy
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: "sorter-backoffice2-prod"
+          slot-name: "Production"
+          package: release.zip

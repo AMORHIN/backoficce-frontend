@@ -18,7 +18,7 @@ export function SidebarRoutes() {
   return (
     <div className='flex flex-col justify-between h-full'>
       <div>
-        <div className='px-2 md:px-6 py-2'>
+        <div className='p-2 md:px-6'>
           <div className='flex items-center justify-between cursor-pointer mb-2' onClick={() => toggleSection('GENERAL')}>
             <p className='text-slate-700 dark:text-slate-300 font-semibold text-sm'>GENERAL</p>
             {openSection === 'GENERAL' ? <ChevronDown className='w-4 h-4 text-slate-700 dark:text-slate-300' /> : <ChevronRight className='w-4 h-4 text-slate-700 dark:text-slate-300' />}
@@ -38,7 +38,7 @@ export function SidebarRoutes() {
         </div>
         <div className='px-2 md:px-6 py-2'>
           <div className='flex items-center justify-between cursor-pointer mb-2' onClick={() => toggleSection('SUPPORT')}>
-            <p className='text-slate-700 dark:text-slate-300 font-semibold text-sm'>SUPPORT</p>
+            <p className='text-slate-700 dark:text-slate-300 font-semibold text-sm'>PERMISOS</p>
             {openSection === 'SUPPORT' ? <ChevronDown className='w-4 h-4 text-slate-700 dark:text-slate-300' /> : <ChevronRight className='w-4 h-4 text-slate-700 dark:text-slate-300' />}
           </div>
           {openSection === 'SUPPORT' && dataSuportSidebar.map((item) => (
@@ -46,10 +46,11 @@ export function SidebarRoutes() {
           ))}
         </div>
       </div>
+
       <div>
-        <footer className='mt-3 p-3 text-center text-xs text-slate-400'>
+        <footer className='mt-3 p-3 text-center'>
           2025 © Sharf Technologies Inc.
-        </footer>
+        </footer> 
       </div>
     </div>
   )
