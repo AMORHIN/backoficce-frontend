@@ -1,7 +1,10 @@
 export interface cubicadoraList{
-    orderWeightDetailId: number;
+  orderWeightDetailId: number;
   providerOrderIdentifier: string;
+  cantidadPedido: number;
   trakingNumber : string;
+  lineaServicio : string;
+  fechaPesaje : string;
   clientCode: string;
   //idUser : string;
   ideq : string;
@@ -12,6 +15,7 @@ export interface cubicadoraList{
   largoCM : number;
   volumenCM3 : number;
   pesoVolumetricoKG: number;
+  nombreCliente : string;
 }
 
 export interface ListCubicadoraProps {

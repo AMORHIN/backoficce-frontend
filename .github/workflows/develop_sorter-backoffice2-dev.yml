@@ -1,4 +1,4 @@
-name: Deploy Next.js to Azure (DEV)
+name: Deploy Next.js to Azure
 
 on:
   push:
@@ -9,10 +9,6 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
-    permissions:
-      id-token: write
-      contents: read
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,17 +18,13 @@ jobs:
         with:
           node-version: 24.x
 
+      # Instala TODO (incluye next)
       - name: Install dependencies
         run: npm install
 
+      # Build de Next.js
       - name: Build
         run: npm run build
-
-      - name: Zip release
-        run: |
-          zip -r release.zip . \
-            -x ".git/*" \
-               ".github/*"
 
       - name: Login Azure
         uses: azure/login@v2
@@ -45,5 +37,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: "sorter-backoffice2-dev"
-          slot-name: "Production"
-          package: release.zip
+          package: .

@@ -4,6 +4,7 @@ import React from "react"
 import {
     ColumnDef,
 	SortingState,
+	PaginationState,
 	flexRender,
 	getFacetedRowModel,
 	ColumnFiltersState,
@@ -13,7 +14,7 @@ import {
 	getPaginationRowModel,
 	getCoreRowModel
 } from '@tanstack/react-table'
-
+//fecha y hora /
 import { 
     Table,
     TableBody,
@@ -37,10 +38,15 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-    const[isMounted, setIsMounted] = React.useState(false);
+    const [pagination, setPagination] = React.useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
+    const [isMounted, setIsMounted] = React.useState(false);
 
     React.useEffect(() => {
         setIsMounted(true);
+    }, []);
+
+    React.useEffect(() => {
+        // No cambiar pageSize dinámicamente
     }, []);
 
     const table = useReactTable({
@@ -52,9 +58,17 @@ export function DataTable<TData, TValue>({
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        getRowId: (row: any, index) => {
+            if (row.orderWeightDetailId !== undefined && row.orderWeightDetailId !== null) {
+                return String(row.orderWeightDetailId);
+            }
+            return String(index);
+        },
+        onPaginationChange: setPagination,
         state: {
             sorting,
             columnFilters,
+            pagination,
         },
     });
 

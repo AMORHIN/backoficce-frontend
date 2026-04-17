@@ -24,18 +24,30 @@ export const getColumns = (): ColumnDef<cubicadoraList>[] => [
   },
   {
     accessorKey: "providerOrderIdentifier",
-    header: ({column}) => {
-        return (
-            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}> 
-                Provider Order Identifier
-                <ArrowDown className="w-4 h-4 ml-2" />
-            </Button>
-        )
-    },
+    header: "Provider OrderIdentifier",
   },
-  { accessorKey: "trackingNumber",  header: "Tracking Number", },
-  { accessorKey: "clientCode", header: "Codigo Cliente", },
-  { accessorKey: "ideq", header: "IDEQ", },
+  {
+    accessorKey: "cantidadPedido",
+    header: "#",
+  },
+  {
+    accessorKey: "trakingNumber",
+    header: "Traking Number",
+  },
+  {
+    accessorKey: "lineaServicio",
+    header: "L. Servicio",
+  },
+  {
+    accessorKey: "fechaPesaje",
+    header: "F. Pesaje",
+  },
+  { accessorKey: "clientCode", header: "C. Cliente", },
+  {
+    accessorKey: "nombreCliente",
+    header: "Cliente",
+  },
+  //{ accessorKey: "ideq", header: "IDEQ", },
   // {
   //   accessorKey: "idSKU",
   //   header: "IdSKU",
@@ -62,12 +74,12 @@ export const getColumns = (): ColumnDef<cubicadoraList>[] => [
   },
   { 
     accessorKey: "volumenCM3", 
-    header: "Volumen (CM³)", 
+    header: "Vol. (CM³)", 
     cell: ({ row }) => <div className="text-right">{formatNumber(row.getValue("volumenCM3"))}</div>
   },
   { 
     accessorKey: "pesoVolumetricoKG", 
-    header: "Peso Volumétrico (KG)", 
+    header: "P. Vol. (KG)", 
     cell: ({ row }) => <div className="text-right">{formatNumber(row.getValue("pesoVolumetricoKG"))}</div>
   }
 ];
