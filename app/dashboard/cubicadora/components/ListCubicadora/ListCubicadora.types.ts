@@ -16,6 +16,7 @@ export interface cubicadoraList{
   volumenCM3 : number;
   pesoVolumetricoKG: number;
   nombreCliente : string;
+  idUser: string
 }
 
 export interface ListCubicadoraProps {

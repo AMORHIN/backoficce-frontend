@@ -35,6 +35,10 @@ export const getColumns = (): ColumnDef<cubicadoraList>[] => [
     header: "Traking Number",
   },
   {
+    accessorKey: "idUser",
+    header: "Tipo",
+  },
+  {
     accessorKey: "lineaServicio",
     header: "L. Servicio",
   },
